@@ -65,7 +65,7 @@ if __name__ == "__main__":
         if not isdir(name):
             continue
         size = 0
-        search = [node.name for node in PostOrderIter(node)]
+        search = [x.name for x in PostOrderIter(node)]
         for n in search:
             size += nodes[n].size
             if size > 100000:
