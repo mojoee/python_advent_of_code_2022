@@ -35,21 +35,16 @@ def create_node(dict, item, node):
     if item.startswith("dir"):
         size = 0
         isdirectory = True
+        prefix = "d"
     else:
         size = int(item.split(" ")[0])
         isdirectory = False
-    dict[name] = NodeS(name=name, parent=node, size=size, isdirectory=isdirectory)
-
-
-def isdir(name: str):
-    if "." in name:
-        return False
-    else:
-        return True
+        prefix = "f"
+    dict[prefix+name] = NodeS(name=name, parent=node, size=size, isdirectory=isdirectory)
 
 
 if __name__ == "__main__":
-    with open("./day7/test_input.txt", "r") as f:
+    with open("./day7/input.txt", "r") as f:
         data = f.read().splitlines()
     root = Node("/") #root
     cwd = "/"
@@ -69,13 +64,8 @@ if __name__ == "__main__":
             continue
         if not node.isdir:
             continue
-        size = 0
-        search = [x.name for x in PostOrderIter(node)]
-        for n in search:
-            size += nodes[n].size
-            if size > 100000:
-                break
-        if size <= 100000:
-            print(f"{name}: {size}")
-            total_size += size
+        node_sum = sum([x.size for x in PostOrderIter(node)])
+        if node_sum <= 100000:
+            # print(f"{name}: {size}")
+            total_size += node_sum
     print(total_size)
