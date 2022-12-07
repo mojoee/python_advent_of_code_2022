@@ -2,9 +2,10 @@ from anytree import Node, RenderTree, AsciiStyle, PostOrderIter
 import anytree
 
 class NodeS(Node):
-    def __init__(self, name, parent, size):
+    def __init__(self, name, parent, size, isdirectory):
         super(NodeS, self).__init__(name=name, parent=parent)
         self.size = size
+        self.isdir = isdirectory
 
 
 def process_command(command: str, current_parent):
@@ -33,9 +34,11 @@ def create_node(dict, item, node):
     name = item.split(" ")[-1]
     if item.startswith("dir"):
         size = 0
+        isdirectory = True
     else:
         size = int(item.split(" ")[0])
-    dict[name] = NodeS(name=name, parent=node, size=size)
+        isdirectory = False
+    dict[name] = NodeS(name=name, parent=node, size=size, isdirectory=isdirectory)
 
 
 def isdir(name: str):
@@ -46,7 +49,7 @@ def isdir(name: str):
 
 
 if __name__ == "__main__":
-    with open("./day7/input.txt", "r") as f:
+    with open("./day7/test_input.txt", "r") as f:
         data = f.read().splitlines()
     root = Node("/") #root
     cwd = "/"
@@ -62,7 +65,9 @@ if __name__ == "__main__":
     print(RenderTree(nodes["/"], style=AsciiStyle()).by_attr())
     total_size = 0
     for name, node in nodes.items():
-        if not isdir(name):
+        if node.name == '/':
+            continue
+        if not node.isdir:
             continue
         size = 0
         search = [x.name for x in PostOrderIter(node)]
@@ -71,5 +76,6 @@ if __name__ == "__main__":
             if size > 100000:
                 break
         if size <= 100000:
+            print(f"{name}: {size}")
             total_size += size
     print(total_size)
