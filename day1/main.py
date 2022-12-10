@@ -1,5 +1,5 @@
 if __name__ == "__main__":
-    with open("input.txt", "r") as myfile:
+    with open("./day1/input.txt", "r") as myfile:
         data = myfile.read().splitlines()
     maximum_value = 0
     current_value = 0
