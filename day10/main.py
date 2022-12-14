@@ -12,7 +12,8 @@ def calculate_signal_strength(x, cycle):
 
 def draw_sprite(cycle, x):
     if cycle - 1 <= x <= cycle+1:
-        print("#", end="")
+        #print("#", end="")
+        print("\u2588", end="")
     else:
         print(".", end="")
     if cycle % 40 == 0:
@@ -30,7 +31,6 @@ if __name__ == "__main__":
     sum = 0
     for item in data:
         # print(item)
-
         cycle += 1
         cycle=draw_sprite(cycle, x)
         
