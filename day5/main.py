@@ -27,9 +27,10 @@ def perform_move(command):
     numbers = [int(x) for x in re.findall(r'\d+', command)]
     start = stacks_container[numbers[1]-1] 
     end = stacks_container[numbers[2]-1] 
+    items_to_put = start.items[-numbers[0]:]
     for i in range(numbers[0]):
-        #end.push(start.items[-numbers[0]:])
-        end.push(start.items[-1])
+        end.push(items_to_put[i])
+        #end.push(start.items[-1])
         start.delete()
     #for i in range(numbers[0]):
 
